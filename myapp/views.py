@@ -1,17 +1,13 @@
 from django.shortcuts import render, redirect
-from django.views.generic import ListView
+from django.urls import reverse_lazy
+from django.views.generic import ListView, CreateView
 
-from .forms import CVForm
-from .models import CV
+from .forms import CVForm, UserForm
+from .models import CV, CustomUser
 
 
 def home_view(request):
-    obj = CV()
-    obj.title = 'titlul meu'
-    obj.description = 'descrierea mea'
-    dictionary = {'key': 'value', 'key2': 'value2'}
-    list_ = [1, 2, 3, 4]
-    return render(request, 'home_view.html', {'object': obj, 'dictionary': dictionary, 'list': list_})
+    return render(request, 'home_view.html')
 
 
 def cv_list(request):
@@ -28,3 +24,10 @@ def add_cv(request):
     else:
         form = CVForm()
     return render(request, 'add_cv.html', {'form': form})
+
+
+class UserCreateView(CreateView):
+    form_class = UserForm
+    success_url = reverse_lazy('login')
+    model = CustomUser
+    template_name = 'user_create.html'

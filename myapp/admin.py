@@ -1,3 +1,6 @@
 from django.contrib import admin
+from django.contrib.admin import ModelAdmin
+from myapp.models import *
 
-# Register your models here.
+admin.site.register(CV)
+admin.site.register(CustomUser)
