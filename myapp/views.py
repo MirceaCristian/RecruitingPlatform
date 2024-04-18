@@ -2,8 +2,8 @@ from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView
 
-from .forms import CVForm, UserForm
-from .models import CV, CustomUser
+from .forms import CVForm, UserForm, ContactForm
+from .models import CV, CustomUser, Contact
 
 
 def home_view(request):
@@ -31,3 +31,10 @@ class UserCreateView(CreateView):
     success_url = reverse_lazy('login')
     model = CustomUser
     template_name = 'user_create.html'
+
+
+class ContactView(CreateView):
+    model = Contact
+    template_name = 'contact.html'
+    success_url = reverse_lazy('home_view')
+    form_class = ContactForm

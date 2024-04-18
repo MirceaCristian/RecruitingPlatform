@@ -2,11 +2,11 @@
 
 <nav class="navbar navbar-expand-lg bg-body-tertiary">
     <div class="container-fluid">
-{#        <a class="navbar-brand" href="{% url 'home_view' %}">#}
-{#            <img src="{% static 'no_image.png' %}" alt="Logo" width="30" height="24"#}
-{#                 class="d-inline-block align-text-top">#}
-{#            #}
-{#        </a>#}
+        {#        <a class="navbar-brand" href="{% url 'home_view' %}">#}
+        {#            <img src="{% static 'no_image.png' %}" alt="Logo" width="30" height="24"#}
+        {#                 class="d-inline-block align-text-top">#}
+        {#            #}
+        {#        </a>#}
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false"
                 aria-label="Toggle navigation">
@@ -17,82 +17,47 @@
                 <li class="nav-item">
                     <a class="nav-link active" aria-current="page" href="{% url 'home_view' %}">Home</a>
                 </li>
-{#                <li class="nav-item">#}
-{#                    <a class="nav-link" href="{% url 'book_list' %}">Books</a>#}
-{#                </li>#}
-{#                <li class="nav-item dropdown">#}
-{#                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"#}
-{#                       aria-expanded="false">#}
-{#                        Genre#}
-{#                    </a>#}
-{#                    <ul class="dropdown-menu">#}
-{#                        {% for genre in genres %}#}
-{#                            <li><a class="dropdown-item" href="{% url 'genre-details' genre.pk %}">{{ genre.name }}</a>#}
-{#                            </li>#}
-{#                        {% endfor %}#}
-{#                        {% if request.user.is_superuser %}#}
-{#                            <li><a class="dropdown-item" href="{% url 'genre-create' %}">Add Genre</a></li>#}
-{#                        {% endif %}#}
-                        {#                        <li>#}
-                        {#                            <hr class="dropdown-divider">#}
-                        {#                        </li>#}
-                        {#                        <li><a class="dropdown-item" href="#">Something else here</a></li>#}
-{#                    </ul>#}
-{#                </li>#}
-{#                <li class="nav-item">#}
-{#                    <a class="nav-link" href="{% url 'contact' %}">Contact</a>#}
-{#                </li>#}
-{#                <li class="nav-item">#}
-{#                    <a class="nav-link" href="{% url 'api-products' %}">API Products</a>#}
-{#                </li>#}
-{#                <li class="nav-item">#}
-{#                    <a class="nav-link" href="{% url 'open-cart' %}">Your Cart{% if count %} ({{ count }}#}
-{#                        ){% endif %}</a>#}
-{#                </li>#}
+
                 {% if request.user.is_authenticated %}
-                    <form action="{% url 'logout' %}" method="post">
-                        {% csrf_token %}
-                        <button class="nav-link" type="submit">Logout, {{ request.user.username }}</button>
-                    </form>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'password_change' %}">Change password</a>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                           aria-expanded="false">
+                            Account
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <form action="{% url 'logout' %}" method="post">
+                                    {% csrf_token %}
+                                    <button class="dropdown-item" type="submit">
+                                        Logout, {{ request.user.username }}</button>
+                                </form>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="{% url 'password_change' %}">Change password</a>
+                            </li>
+                            {% if request.user.is_superuser %}
+                                <li><a class="dropdown-item" href="/admin">Django Admin</a>
+                                </li>
+                            {% endif %}
+                        </ul>
                     </li>
                 {% else %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'login' %}">Login</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'create-user' %}">Register</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'password_reset' %}">Reset password</a>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                           aria-expanded="false">
+                            Registration
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="{% url 'login' %}">Sign in</a>
+                            </li>
+                            <li><a class="dropdown-item" href="{% url 'create-user' %}">Sign up</a>
+                            </li>
+                            <li><a class="dropdown-item" href="{% url 'password_reset' %}">Password reset</a>
+                            </li>
+                        </ul>
                     </li>
                 {% endif %}
-                {% if request.user.is_superuser %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="/admin">Django Admin</a>
-                    </li>
-                {% endif %}
-
-{#                <li class="nav-item dropdown">#}
-{#                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"#}
-{#                       aria-expanded="false" id="setLanguage" style="background-color: white !important;">#}
-{#                        {{ language.name }}#}
-                        {#                        <img src="/static/images/languages/{{ language }}.svg" alt="" style="height: 15px; width: 25px; ">#}
-{#                    </a>#}
-{#                    <form id="language-form" action="{% url 'set_language' %}" method="post">#}
-{#                        <ul class="dropdown-menu dropdown-menu-end">#}
-{#                            {% for language in languages %}#}
-{#                                <li>#}
-{#                                    <a class="dropdown-item" href="#" data-language="{{ language.code }}">#}
-                                        {#                                        <img src="{{ language.flag }}" style="height: 15px; width: 25px; margin-right: 15px;">#}
-{#                                        {{ language.name }}#}
-{#                                    </a>#}
-{#                                </li>#}
-{#                            {% endfor %}#}
-{#                        </ul>#}
-{#                    </form>#}
-{#                </li>#}
+                <li class="nav-item"><a class='nav-link' href={% url 'contact' %}>Contact</a></li>
             </ul>
             <form class="d-flex" role="search">
                 <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
