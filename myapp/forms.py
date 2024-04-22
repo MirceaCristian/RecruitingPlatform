@@ -1,13 +1,28 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, PasswordResetForm, SetPasswordForm
 
-from .models import CV, CustomUser, Contact
+from .models import CV, CustomUser, Contact, WorkField
 
 
 class CVForm(forms.ModelForm):
     class Meta:
         model = CV
-        fields = ['cv_file']
+        fields = "__all__"
+        exclude = ['user']
+
+    widgets = {
+        'cv_file': forms.FileInput(attrs={'class': 'form-control'}),
+        'work_field': forms.TextInput(attrs={'class': 'form-control'}),
+    }
+
+
+class WorkFieldForm(forms.ModelForm):
+    class Meta:
+        model = WorkField
+        fields = "__all__"
+        widgets = {
+            'work_field': forms.TextInput(attrs={'class': 'form'})
+        }
 
 
 class UserForm(UserCreationForm):
