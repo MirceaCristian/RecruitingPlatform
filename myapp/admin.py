@@ -5,3 +5,5 @@ from myapp.models import *
 admin.site.register(CV)
 admin.site.register(CustomUser)
 admin.site.register(WorkField)
+admin.site.register(Job)
+

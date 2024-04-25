@@ -3,12 +3,16 @@
 {% block title %}Add CV{% endblock %}
 
 {% block content %}
-    <div class="col-md-6 col-12">
-        <h2>Add CV here:</h2>
-        <form method="post" enctype="multipart/form-data">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit" class="btn btn-success form-control">Submit</button>
-        </form>
+    <div class="container-addcv">
+        <div class="align-element">
+            <h2>Add CV here:</h2>
+            <div class="align-element">
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+            </div>
+        </div>
     </div>
 {% endblock %}

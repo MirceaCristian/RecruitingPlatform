@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}My Profile{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row justify-content-center">   
+            <div class="col-md-6">
+                <h1 class="text-center">My Profile:</h1>
+                <div class="profile-container">
+                    <div class="profile-field">
+                        <label for="first-name">First Name:</label>
+                        <span id="first-name">{{ profile.first_name }}</span>
+                    </div>
+                    <div class="profile-field">
+                        <label for="last-name">Last Name:</label>
+                        <span id="last-name">{{ profile.last_name }}</span>
+                    </div>
+                    <div class="profile-field">
+                        <label for="email">Email:</label>
+                        <span id="email">{{ profile.email }}</span>
+                    </div>
+                    <div class="profile-field">
+                        <label for="phone">Phone Number:</label>
+                        <span id="phone">{{ profile.phone_number }}</span>
+                    </div>
+                    <div class="profile-field">
+                        <label for="city">City:</label>
+                        <span id="city">{{ profile.city }}</span>
+                    </div>
+                    <div class="profile-field">
+                        <label for="country">Country:</label>
+                        <span id="country">{{ profile.country }}</span>
+                    </div>
+                    <div class="profile-field">
+                        <label for="profession">Profession:</label>
+                        <span id="profession">{{ profile.profession }}</span>
+                    </div>
+                    <div class="profile-field">
+                        <label for="date_of_birth">Date of birth:</label>
+                        <span id="date_of_birth">{{ profile.date_of_birth }}</span>
+                    </div>
+                <a href="{% url "edit_profile" %}" class="btn btn-primary">Edit profile</a>
+                </div>    
+            </div>    
+        </div>    
+    </div>
+{% endblock %}

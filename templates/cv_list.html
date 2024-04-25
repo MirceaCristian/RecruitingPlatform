@@ -7,28 +7,44 @@
 {% block content %}
     <div class="col-md-6 col-12">
         <h1>CV List: </h1>
-
-        {% for cv in cvs %}
-            <div class="cv-item"><a href="{{ cv.cv_file.url }}">{{ cv.cv_file.url|filename }}</a>
-                <p><strong>Work field:</strong>{{ cv.field_of_work }}</p>
-                <a href="{{ cv.cv_file.url }}" class="download-link" download>
-                    <img src="{% static 'download_icon.png' %}" alt="Download">
-                </a>
-                <form id="delete-form-{{ cv.id }}" method="post" action="{% url 'delete_cv' cv_id=cv.id %}">
-                    {% csrf_token %}
-                    <button type="button" class="delete-button" onclick="confirmDelete('{{ cv.id }}')">
-                        <img src="{% static 'delete_icon.png' %}" alt="Delete">
-                    </button>
-                </form>
-            </div>
-        {% endfor %}
-<script>
-    function confirmDelete(cvId) {
-        if(confirm('Are you sure you want to permanently delete this CV')) {
-            document.getElementById('delete-form-' + cvId).submit();
-        }
-    }
-</script>
+        <table class="custom-table">
+            <thead>
+            <tr>
+                <th>CV File</th>
+                <th>Field of Work</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for cv in cvs %}
+                <tr class="table-row">
+                    <td class="table-cell"><a href="{{ cv.cv_file.url }}">{{ cv.cv_file.url|filename }}</a></td>
+                    <td class="table-cell">{{ cv.field_of_work }}</td>
+                    <td class="table-cell">
+                        <div class="button-container">
+                            <a href="{{ cv.cv_file.url }}" class="download-link" data-tooltip="Download" download>
+                                <img src="{% static 'download_icon.png' %}" alt="Download">
+                            </a>
+                            <form id="delete-form-{{ cv.id }}" method="post" action="{% url 'delete_cv' cv_id=cv.id %}">
+                                {% csrf_token %}
+                                <button type="button" class="delete-button" onclick="confirmDelete('{{ cv.id }}')"
+                                        data-tooltip="Delete">
+                                    <img src="{% static 'delete_icon.png' %}" alt="Delete">
+                                </button>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        <script>
+            function confirmDelete(cvId) {
+                if (confirm('Are you sure you want to permanently delete this CV')) {
+                    document.getElementById('delete-form-' + cvId).submit();
+                }
+            }
+        </script>
 
     </div>
 {% endblock %}

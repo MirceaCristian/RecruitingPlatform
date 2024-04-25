@@ -7,15 +7,19 @@ from django.dispatch import receiver
 from proiect_django import settings
 
 
-class CustomUser(AbstractUser):
-    phone_number = models.CharField(max_length=11, unique=True)
-
-
 class WorkField(models.Model):
     work_field = models.CharField(max_length=50, unique=True)
 
     def __str__(self):
         return self.work_field
+
+
+class CustomUser(AbstractUser):
+    phone_number = models.CharField(max_length=11, unique=True)
+    city = models.CharField(max_length=200, blank=True, null=True)
+    country = models.CharField(max_length=200, blank=True, null=True)
+    profession = models.ForeignKey(WorkField, on_delete=models.CASCADE, null=True, blank=True)
+    date_of_birth = models.DateField(blank=True, null=True)
 
 
 class CV(models.Model):
@@ -38,7 +42,8 @@ class Contact(models.Model):
     message = models.TextField(blank=True, null=True)
 
     def __str__(self):
-        return f"e-mail: {self.email}, name: {self.name}, subject: {self.subject}, message: {self.message}, phone: {self.phone}"
+        return (f"e-mail: {self.email}, name: {self.name}, subject: {self.subject}, message: {self.message},"
+                f" phone: {self.phone}")
 
 
 @receiver(post_save, sender=Contact)
@@ -50,3 +55,10 @@ def send_mail(sender, instance, created, **kwargs):
             from_email=settings.EMAIL_HOST_USER,
             recipient_list=[settings.EMAIL_HOST_USER]
         )
+
+
+class Job(models.Model):
+    name = models.CharField(max_length=255, blank=True, null=True)
+    company = models.CharField(max_length=255, blank=True, null=True)
+    description = models.TextField(blank=True, null=True)
+    field_of_work = models.ForeignKey(WorkField, on_delete=models.CASCADE, blank=True, null=True)

@@ -9,4 +9,6 @@ urlpatterns = [
     path('contact/', views.ContactView.as_view(), name='contact'),
     path('delete_cv/<int:cv_id>/', views.delete_cv, name='delete_cv'),
     path('work-field/add/', views.WorkFieldCreateView.as_view(), name='work-field-create'),
+    path('my-profile', views.my_profile, name='my_profile'),
+    path('edit-profile/', views.edit_profile, name='edit_profile'),
 ]

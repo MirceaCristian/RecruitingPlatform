@@ -6,7 +6,7 @@ from django.views.generic import ListView, CreateView, DeleteView
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404
 
-from .forms import CVForm, UserForm, ContactForm, WorkFieldForm
+from .forms import CVForm, UserForm, ContactForm, WorkFieldForm, EditProfileForm
 from .models import CV, CustomUser, Contact, WorkField
 
 
@@ -17,6 +17,24 @@ class IsSuperUserMixin(UserPassesTestMixin):
 
 def home_view(request):
     return render(request, 'home_view.html')
+
+
+@login_required
+def my_profile(request):
+    profile = request.user
+    return render(request, 'my_profile.html', {'profile': profile})
+
+
+@login_required
+def edit_profile(request):
+    profile = request.user
+    form = EditProfileForm(instance=profile)
+    if request.method == 'POST':
+        form = EditProfileForm(request.POST, instance=profile)
+        if form.is_valid():
+            form.save()
+            return redirect('my_profile')
+    return render(request, 'edit_profile.html', {"form": form})
 
 
 @login_required
