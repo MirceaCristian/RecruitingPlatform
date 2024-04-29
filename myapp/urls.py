@@ -11,4 +11,6 @@ urlpatterns = [
     path('work-field/add/', views.WorkFieldCreateView.as_view(), name='work-field-create'),
     path('my-profile', views.my_profile, name='my_profile'),
     path('edit-profile/', views.edit_profile, name='edit_profile'),
+    path('job-search/', views.job_search, name='job_search'),
+    path('apply-job/<int:job_id>/', views.apply_job, name='apply_job')
 ]

@@ -61,4 +61,6 @@ class Job(models.Model):
     name = models.CharField(max_length=255, blank=True, null=True)
     company = models.CharField(max_length=255, blank=True, null=True)
     description = models.TextField(blank=True, null=True)
-    field_of_work = models.ForeignKey(WorkField, on_delete=models.CASCADE, blank=True, null=True)
+    work_field = models.ForeignKey(WorkField, on_delete=models.CASCADE, blank=True, null=True)
+    company_email = models.EmailField(max_length=255, blank=True, null=True)
+

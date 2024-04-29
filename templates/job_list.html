@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Search Result{% endblock %}
+
+{% block content %}
+    {% if jobs %}
+        <div class="container">
+            <h2>Search Results for "{{ query }}":</h2>
+
+            <div class="profile-container">
+                <ul>
+                    {% for job in jobs %}
+                        <li>
+                            <strong>Job Title:</strong> {{ job.name }}<br>
+                            <strong>Company:</strong> {{ job.company }}<br>
+                            <strong>Work Field:</strong> {{ job.work_field }}<br>
+                            <strong>Job Description:</strong> {{ job.description }}
+                            <form action="{% url 'apply_job' job.id %}" method="post">
+                                {% csrf_token %}
+                                <input type="submit" value="Apply">
+                            </form>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+
+    {% else %}
+        <p>No jobs found.</p>
+    {% endif %}
+
+{% endblock %}

@@ -26,7 +26,12 @@ SECRET_KEY = 'django-insecure-ng&td8o$8+=&*rjw4f=t7xoxmz_reb9_*x-io5o17k8h4)x$ql
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'recruitingplatform.pythonanywhere.com',
+    'localhost'
+    '127.0.0.1'
+
+]
 
 # Application definition
 

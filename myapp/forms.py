@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, PasswordResetForm, SetPasswordForm
 
-from .models import CV, CustomUser, Contact, WorkField
+from .models import CV, CustomUser, Contact, WorkField, Job
 
 
 class CVForm(forms.ModelForm):
@@ -130,4 +130,13 @@ class EditProfileForm(forms.ModelForm):
             'city': forms.TextInput(attrs={'class': 'form-control'}),
             'country': forms.TextInput(attrs={'class': 'form-control'}),
             'date_of_birth': forms.DateInput(attrs={'type': 'date'})
+        }
+
+
+class ApplyJobForm(forms.ModelForm):
+    class Meta:
+        model = CV
+        fields = ['cv_file']
+        widgets = {
+            'cv_file': forms.Select(attrs={'class': 'form-select'})
         }
