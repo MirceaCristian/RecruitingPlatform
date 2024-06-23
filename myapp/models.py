@@ -31,7 +31,7 @@ class CV(models.Model):
         app_label = 'myapp'
 
     def __str__(self):
-        return f"{self.user} : {self.cv_file.name}"
+        return f"{self.user} : {self.cv_file.name.split('/')[-1]}"
 
 
 class Contact(models.Model):
@@ -63,4 +63,9 @@ class Job(models.Model):
     description = models.TextField(blank=True, null=True)
     work_field = models.ForeignKey(WorkField, on_delete=models.CASCADE, blank=True, null=True)
     company_email = models.EmailField(max_length=255, blank=True, null=True)
+
+
+class JobApplication(models.Model):
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    cv = models.ForeignKey(CV, on_delete=models.CASCADE)
 

@@ -1,7 +1,9 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, PasswordResetForm, SetPasswordForm
+from django.http import request
 
-from .models import CV, CustomUser, Contact, WorkField, Job
+from . import models
+from .models import CV, CustomUser, Contact, WorkField, Job, JobApplication
 
 
 class CVForm(forms.ModelForm):
@@ -50,13 +52,9 @@ class UserForm(UserCreationForm):
         self.fields['password2'].widget.attrs.update({'class': 'form-control'})
 
     def clean_email(self):
-        print('da')
         email = self.cleaned_data.get('email')
-        print(email)
         user = CustomUser.objects.filter(email=email).first()
-        print(user)
         if user is not None:
-            print('raise')
             raise forms.ValidationError("This email is already taken!")
         return email
 
@@ -135,8 +133,13 @@ class EditProfileForm(forms.ModelForm):
 
 class ApplyJobForm(forms.ModelForm):
     class Meta:
-        model = CV
-        fields = ['cv_file']
+        model = JobApplication
+        fields = ['cv']
         widgets = {
-            'cv_file': forms.Select(attrs={'class': 'form-select'})
+            'cv': forms.Select(attrs={'class': 'form-select'})
         }
+
+    def __init__(self, user, **kwargs):
+        super(ApplyJobForm, self).__init__(**kwargs)
+        if user:
+            self.fields['cv'].queryset = CV.objects.filter(user=user)

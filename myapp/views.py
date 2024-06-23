@@ -83,13 +83,11 @@ def send_email_with_attachment(subject, message, from_email, to_email, attachmen
 def apply_job(request, job_id):
     job = Job.objects.get(id=job_id)
     user = request.user
-    cvs = CV.objects.filter(user=request.user)
-    form = ApplyJobForm()
+    form = ApplyJobForm(user=request.user)
     if request.method == 'POST':
-        form = ApplyJobForm(request.POST)
+        form = ApplyJobForm(user=request.user, data=request.POST)
         if form.is_valid():
-            selected_cv_id = form.cleaned_data['CV']
-            selected_cv = CV.objects.get(id=selected_cv_id)
+            selected_cv = form.cleaned_data['cv']
             subject = f'Applying for {job.name}'
             message = f'Please find attached my CV for the position of {job.name}'
 
@@ -97,7 +95,7 @@ def apply_job(request, job_id):
                 subject=subject,
                 message=message,
                 from_email=user.email,
-                to_email=job.company_email,
+                to_email=[job.company_email],
                 attachment_path=selected_cv.cv_file.path
             )
     return render(request, 'apply_job.html', {'form': form, 'job': job})

@@ -18,7 +18,7 @@
                             <strong>Job Description:</strong> {{ job.description }}
                             <form action="{% url 'apply_job' job.id %}" method="post">
                                 {% csrf_token %}
-                                <input type="submit" value="Apply">
+                                <button type="submit" class="btn btn-primary">Apply</button>
                             </form>
                         </li>
                     {% endfor %}
